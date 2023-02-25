@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Pixel Adventure 1 e 2/Enemies/Mushroom/Run (32x32).png" type="Texture" id=1]
 [ext_resource path="res://Pixel Adventure 1 e 2/Enemies/Mushroom/Idle (32x32).png" type="Texture" id=2]
 [ext_resource path="res://Pixel Adventure 1 e 2/Enemies/Mushroom/Hit.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/Mushroom.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Hitbox.tscn" type="PackedScene" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 13, 6.5 )
+extents = Vector2( 13, 7.5 )
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -151,12 +152,12 @@ collision_mask = 9
 script = ExtResource( 4 )
 
 [node name="texture" type="Sprite" parent="."]
-texture = ExtResource( 3 )
-hframes = 5
+texture = ExtResource( 2 )
+hframes = 14
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 9.5 )
+position = Vector2( 0, 8.5 )
 shape = SubResource( 1 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
@@ -172,4 +173,13 @@ enabled = true
 cast_to = Vector2( -21, 0 )
 collision_mask = 8
 
+[node name="Hitbox" parent="." instance=ExtResource( 5 )]
+modulate = Color( 0.129412, 1, 0.00392157, 1 )
+
+[node name="Collision" parent="Hitbox" index="0"]
+position = Vector2( 0, -1.5 )
+
 [connection signal="animation_finished" from="anim" to="." method="_on_anim_animation_finished"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
+
+[editable path="Hitbox"]
